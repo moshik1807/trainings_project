@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { Button, TextField, Box, Alert } from "@mui/material";
 
-import { signInModes } from "../modes";
+import { signInModes } from "../constantVariables";
 import { login, signup } from "../features/user/userThunk";
 
 export default function Form(props) {
@@ -19,7 +19,7 @@ export default function Form(props) {
     event.preventDefault();
     setError("");
     try {
-      if (props.mode === signInModes.signUp) {
+      if (props.authMode === signInModes.signUp) {
         await dispatch(signup({ name, email })).unwrap();
       } else {
         await dispatch(login({ name, email })).unwrap();

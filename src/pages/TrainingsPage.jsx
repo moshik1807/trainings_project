@@ -16,9 +16,6 @@ export default function TrainingsPage() {
   const trainings = useSelector(trainingsSelector);
 
   useEffect(() => {
-    if (!user) {
-      return;
-    }
     if (!trainings.length) {
       dispatch(getTrainingsById(user.id));
     }

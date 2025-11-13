@@ -2,7 +2,6 @@ import { Button as MuiButton }  from "@mui/material";
 
 export function Button({ onClick, children }) {
   return (
-    <>
       <MuiButton
         sx={{
           px: 2,
@@ -17,7 +16,6 @@ export function Button({ onClick, children }) {
       >
         {children}
       </MuiButton>
-    </>
   );
 }
 

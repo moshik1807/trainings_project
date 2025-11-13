@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { Box } from "@mui/material";
 
-import { signInModes } from "../modes";
+import { signInModes } from "../constantVariables";
 import Form from "../components/Form";
 import { userSelector } from "../features/user/userSlice";
 import { Button } from "../components/Button";
@@ -12,7 +12,7 @@ import { Button } from "../components/Button";
 export default function LoginPage() {
   const navigate = useNavigate();
 
-  const [mode, setMode] = useState("");
+  const [authMode, setAuthMode] = useState("");
 
   const user = useSelector(userSelector);
 
@@ -22,7 +22,7 @@ export default function LoginPage() {
     }
   }, [user, navigate]);
 
-  if (!mode) {
+  if (!authMode) {
     return (
       <Box
         sx={{
@@ -34,12 +34,16 @@ export default function LoginPage() {
           gap: 2,
         }}
       >
-        <Button onClick={() => setMode(signInModes.login)}>{signInModes.login}</Button>
+        <Button onClick={() => setAuthMode(signInModes.login)}>
+          {signInModes.login}
+        </Button>
 
-        <Button onClick={() => setMode(signInModes.signUp)}>{signInModes.signUp}</Button>
+        <Button onClick={() => setAuthMode(signInModes.signUp)}>
+          {signInModes.signUp}
+        </Button>
       </Box>
     );
   }
 
-  return <Form mode={mode} />;
+  return <Form authMode={authMode} />;
 }

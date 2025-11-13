@@ -59,7 +59,7 @@ const trainingsSlice = createSlice({
       .addCase(deleteTraining.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.trainings = state.trainings.filter(
-          ({id}) => id !== parseInt(action.payload)
+          ({ id }) => id !== parseInt(action.payload)
         );
       })
       .addCase(deleteTraining.rejected, (state, action) => {
@@ -96,3 +96,4 @@ function enterTraining(trainings, training) {
 export const { cleanTrainings, CleanError } = trainingsSlice.actions;
 export default trainingsSlice.reducer;
 export const trainingsSelector = (state) => state.trainings.trainings;
+export const traininssErrorSelector = (state) => state.trainings.error;

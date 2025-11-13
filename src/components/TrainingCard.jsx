@@ -12,7 +12,7 @@ export function TrainingCard({ training }) {
   const trainers = useSelector((state) => state.trainers.trainers);
   const user = useSelector(userSelector);
 
-  const trainer = trainers?.find(({ id }) => id === parseInt(training.coachId));
+  const trainer = trainers?.find(({ id }) => id === parseInt(training.trainerId));
 
   const handleDelete = () => {
     dispatch(deleteTraining({ trainingId: training.id, userId: user.id }));

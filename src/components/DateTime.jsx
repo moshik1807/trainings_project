@@ -5,6 +5,7 @@ import { Snackbar, Box, TextField, Typography, Alert } from "@mui/material";
 
 import { Button } from "./Button";
 import { createTraining } from "../features/trainings/trainingsThunk";
+import { traininssErrorSelector } from "../features/trainings/trainingsSlice";
 import { userIdSelector } from "../features/user/userSlice";
 import { CleanError } from "../features/trainings/trainingsSlice";
 
@@ -15,17 +16,18 @@ export function DateTime({ trainerId }) {
   const [time, setTime] = useState("");
   const [open, setOpen] = useState(false);
 
-  const error = useSelector((state) => state.trainings.error);
+  const error = useSelector(traininssErrorSelector);
   const userId = useSelector(userIdSelector);
 
   const handleSubmit = () => {
-    const training = {
-      coachId: trainerId,
-      traineeId: userId,
-      date: date,
-      time: time,
-    };
-    dispatch(createTraining(training));
+    dispatch(
+      createTraining({
+        trainerId: trainerId,
+        traineeId: userId,
+        date: date,
+        time: time,
+      })
+    );
     setOpen(true);
     setDate("");
     setTime("");
