@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 
-export function TrainerDetails({title, text}) {
+export function TrainerDetails({ title, text }) {
   return (
     <Typography sx={{ my: 0.5 }}>
       <strong>{title}: </strong>

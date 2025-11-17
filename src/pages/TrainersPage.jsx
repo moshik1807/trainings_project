@@ -4,13 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { Box, Grid, Container, Typography } from "@mui/material";
 
 import Navbar from "../components/Navbar";
-import TrainerCard from "../components/TrainerCard";
+import TrainerCard from "../components/trainer/TrainerCard";
 import { getAllTrainers } from "../features/trainers/trainersThunk";
 import { trainersSelector } from "../features/trainers/trainersSlice";
 import {
   searchTrainersSelector,
   searchTrainersErrorSelector,
 } from "../features/SearchTrainers/SearchTrainersSlice";
+import { userIdSelector } from "../features/user/userSlice";
 
 export default function TrainersPage() {
   const dispatch = useDispatch();
@@ -18,12 +19,13 @@ export default function TrainersPage() {
   const trainers = useSelector(trainersSelector);
   const searchTrainers = useSelector(searchTrainersSelector);
   const searchTrainersError = useSelector(searchTrainersErrorSelector);
+  const user = useSelector(userIdSelector);
 
   useEffect(() => {
-    if (!trainers.length) {
+    if (user && !trainers.length) {
       dispatch(getAllTrainers());
     }
-  }, [dispatch, trainers]);
+  }, [dispatch, trainers, user]);
 
   if (searchTrainersError) {
     return (

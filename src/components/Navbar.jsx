@@ -6,6 +6,7 @@ import { AppBar, Toolbar } from "@mui/material";
 import { Button } from "./Button";
 import SearchTrainer from "./SearchTrainer";
 import { logout } from "../features/user/userSlice";
+import { locations } from "../constantVariables";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -15,7 +16,8 @@ export default function Navbar() {
 
   const handleExit = () => {
     dispatch(logout());
-    navigate("/");
+    localStorage.removeItem("token");
+    navigate(locations.loginPage);
   };
 
   return (
@@ -23,12 +25,16 @@ export default function Navbar() {
       <Toolbar
         sx={{ bgcolor: "rgba(146, 178, 193, 0.8)", borderRadius: "10px" }}
       >
-        <Button onClick={() => navigate("/trainers")}>trainers</Button>
+        <Button onClick={() => navigate(locations.trainersPage)}>
+          trainers
+        </Button>
 
-        <Button onClick={() => navigate("/trainings")}>trainings</Button>
+        <Button onClick={() => navigate(locations.trainingsPage)}>
+          trainings
+        </Button>
 
         <Button onClick={handleExit}>exit</Button>
-        {location.pathname === "/trainers" && <SearchTrainer />}
+        {location.pathname === locations.trainersPage && <SearchTrainer />}
       </Toolbar>
     </AppBar>
   );

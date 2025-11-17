@@ -2,10 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { getTrainersBySearch } from "./SearchTrainersThunk";
 import { logout } from "../user/userSlice";
+import { apiStatus } from "../../constantVariables";
 
 const initialState = {
   searchTrainers: [],
-  status: "idle",
+  status: apiStatus.start,
   error: null,
 };
 
@@ -15,34 +16,32 @@ const SearchTrainersSlice = createSlice({
   reducers: {
     cleanSearch: (state) => {
       state.searchTrainers = [];
-      state.status = "idle";
+      state.status = apiStatus.start;
       state.error = null;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getTrainersBySearch.pending, (state) => {
-        state.status = "loading";
+        state.status = apiStatus.pending;
       })
       .addCase(getTrainersBySearch.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = apiStatus.fulfilled;
         state.searchTrainers = action.payload;
       })
       .addCase(getTrainersBySearch.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = apiStatus.rejected;
         state.error = action.error.message;
       })
 
-      .addCase(logout, (state) => {
-        state.searchTrainers = [];
-        state.status = "idle";
-        state.error = null;
-      });
+      .addCase(logout, () => initialState);
   },
 });
 
 export const { cleanSearch } = SearchTrainersSlice.actions;
+
 export default SearchTrainersSlice.reducer;
+
 export const searchTrainersSelector = (state) =>
   state.searchTrainers.searchTrainers;
 export const searchTrainersErrorSelector = (state) =>

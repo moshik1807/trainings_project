@@ -5,8 +5,11 @@ export const getTrainingsById = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const res = await fetch(`http://localhost:3000/trainings/readById/${id}`);
+
       if (!res.ok) throw new Error("Failed to fetch trainings");
+
       const data = await res.json();
+
       return data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
@@ -24,8 +27,11 @@ export const deleteTraining = createAsyncThunk(
           method: "DELETE",
         }
       );
+
       if (!res.ok) throw new Error("Failed to fetch delete");
+
       const data = await res.json();
+
       return data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
@@ -44,9 +50,10 @@ export const createTraining = createAsyncThunk(
       });
 
       const data = await res.json();
+
       if (!res.ok) return thunkAPI.rejectWithValue(data.message);
 
-      return data.data
+      return data.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
     }

@@ -1,40 +1,24 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const login = createAsyncThunk("user/login", async (data, thunkAPI) => {
-  try {
-    const res = await fetch("http://localhost:3000/trainees/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
-    if (!res.ok) {
-      throw new Error("Login failed");
-    }
-
-    return await res.json();
-  } catch (err) {
-    return thunkAPI.rejectWithValue(err.message);
-  }
-});
-
-export const signup = createAsyncThunk(
-  "user/signup",
-  async (data, thunkAPI) => {
+export const getUserById = createAsyncThunk(
+  "user/getUserById",
+  async (token, thunkAPI) => {
     try {
-      const res = await fetch("http://localhost:3000/trainees/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+      const res = await fetch("http://localhost:3000/trainees/readById", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
 
-      if (!res.ok) {
-        throw new Error("signup failed");
-      }
+      if (!res.ok) return thunkAPI.rejectWithValue("Failed to fetch user");
 
-      return res.json();
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err.message);
+      const data = await res.json();
+
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );

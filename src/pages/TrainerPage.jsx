@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { Box, Typography, Avatar, Paper, Stack, Divider } from "@mui/material";
+import { Box, Typography, Paper, Stack, Divider } from "@mui/material";
 
 import { DateTime } from "../components/DateTime";
 import { trainersSelector } from "../features/trainers/trainersSlice";
@@ -23,6 +23,7 @@ export default function TrainerPage() {
       setTrainer(trainer);
     }
   }, [trainers, id]);
+
   if (!trainer) {
     return <Typography>Trainer not found</Typography>;
   }
@@ -49,8 +50,7 @@ export default function TrainerPage() {
           }}
         >
           <Stack spacing={3} alignItems="center">
-
-            <TrainerPrifile trainer={trainer}/>
+            <TrainerPrifile trainer={trainer} />
 
             <Divider sx={{ width: "100%" }} />
 
@@ -59,7 +59,6 @@ export default function TrainerPage() {
             <Divider sx={{ width: "100%" }} />
 
             <DateTime trainerId={id} />
-
           </Stack>
         </Paper>
       </Box>

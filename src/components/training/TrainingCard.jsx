@@ -2,29 +2,30 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Card, CardContent, Typography, Avatar } from "@mui/material";
 
-import { Button } from "./Button";
-import { deleteTraining } from "../features/trainings/trainingsThunk";
-import { userSelector } from "../features/user/userSlice";
+import { Button } from "../Button";
+import { deleteTraining } from "../../features/trainings/trainingsThunk";
+import { userSelector } from "../../features/user/userSlice";
+import { trainersSelector } from "../../features/trainers/trainersSlice";
+import { TrainingInformation } from "./trainingInformation";
 
 export function TrainingCard({ training }) {
   const dispatch = useDispatch();
 
-  const trainers = useSelector((state) => state.trainers.trainers);
+  const trainers = useSelector(trainersSelector);
   const user = useSelector(userSelector);
 
-  const trainer = trainers?.find(({ id }) => id === parseInt(training.trainerId));
+  const trainer = trainers?.find(
+    ({ id }) => id === parseInt(training.trainerId)
+  );
 
-  const handleDelete = () => {
+  const handleDelete = () =>
     dispatch(deleteTraining({ trainingId: training.id, userId: user.id }));
-  };
 
   if (!trainer) {
     return (
-      <>
-        <Typography variant="h3" sx={{ color: "white" }}>
-          Trainer not found
-        </Typography>
-      </>
+      <Typography variant="h3" sx={{ color: "white" }}>
+        Trainer not found
+      </Typography>
     );
   }
 
@@ -59,17 +60,8 @@ export function TrainingCard({ training }) {
           p: 2,
         }}
       >
-        <Typography variant="h6">
-          <strong>trainer: </strong>
-          {trainer.name}
-        </Typography>
-        <Typography variant="body2">
-          <strong>training time :</strong> {training.date} {training.time}
-        </Typography>
-        <Typography variant="body2">
-          <strong>trainingType : </strong>
-          {trainer.trainingType}
-        </Typography>
+        <TrainingInformation trainer={trainer} training={training} />
+
         <Button onClick={handleDelete}>🗑️</Button>
       </CardContent>
     </Card>

@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Snackbar, Box, TextField, Typography, Alert } from "@mui/material";
+import {
+  Snackbar,
+  Box,
+  TextField,
+  Typography,
+  Alert,
+  Grid,
+} from "@mui/material";
 
 import { Button } from "./Button";
 import { createTraining } from "../features/trainings/trainingsThunk";
@@ -34,23 +41,11 @@ export function DateTime({ trainerId }) {
   };
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      gap={2}
-      sx={{
-        bgcolor: "rgba(179, 229, 252, 0.3)",
-        p: 3,
-        borderRadius: 3,
-        width: "300px",
-        mx: "auto",
-        boxShadow: 2,
-      }}
-    >
+    <Grid container spacing={2} justifyContent="center" sx={{ p: 3 }}>
       <Typography variant="h6" sx={{ color: "rgba(2, 119, 189, 0.9)" }}>
         Schedule a Training
       </Typography>
+
       <TextField
         type="date"
         value={date}
@@ -79,6 +74,6 @@ export function DateTime({ trainerId }) {
           {error ? error : "Training added successfully!"}
         </Alert>
       </Snackbar>
-    </Box>
+    </Grid>
   );
 }

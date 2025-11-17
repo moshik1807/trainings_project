@@ -5,26 +5,33 @@ import { useDispatch } from "react-redux";
 import { Button, TextField, Box, Alert } from "@mui/material";
 
 import { signInModes } from "../constantVariables";
-import { login, signup } from "../features/user/userThunk";
+import { getUserById } from "../features/user/userThunk";
+import { login, signup } from "../api";
+import { locations } from "../constantVariables";
 
-export default function Form(props) {
+export default function Form({ authMode }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
+    let token;
     try {
-      if (props.authMode === signInModes.signUp) {
-        await dispatch(signup({ name, email })).unwrap();
+      if (authMode === signInModes.signUp) {
+        token = await signup({ name, password });
+        console.log(token);
       } else {
-        await dispatch(login({ name, email })).unwrap();
+        token = await login({ name, password });
+        console.log(token);
       }
-      navigate("/trainers");
+      localStorage.setItem("token", token);
+      dispatch(getUserById(token));
+      navigate(locations.trainersPage);
     } catch (error) {
       console.error(error);
       setError("Incorrect name or email.");
@@ -60,10 +67,10 @@ export default function Form(props) {
         required
       />
       <TextField
-        label="Email"
-        type="email"
-        value={email}
-        onChange={({ target: { value } }) => setEmail(value)}
+        label="password"
+        type="password"
+        value={password}
+        onChange={({ target: { value } }) => setPassword(value)}
         required
       />
       <Button type="submit">Submit</Button>

@@ -2,10 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { getAllTrainers } from "./trainersThunk";
 import { logout } from "../user/userSlice";
+import { apiStatus } from "../../constantVariables";
 
 const initialState = {
   trainers: [],
-  status: "idle",
+  status: apiStatus.start,
   error: null,
 };
 
@@ -15,32 +16,30 @@ const trainersSlice = createSlice({
   reducers: {
     clean: (state) => {
       state.trainers = [];
-      state.status = "idle";
+      state.status = apiStatus.start;
       state.error = null;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getAllTrainers.pending, (state) => {
-        state.status = "loading";
+        state.status = apiStatus.pending;
       })
       .addCase(getAllTrainers.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = apiStatus.fulfilled;
         state.trainers = action.payload;
       })
       .addCase(getAllTrainers.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = apiStatus.rejected;
         state.error = action.error.message;
       })
 
-      .addCase(logout, (state) => {
-        state.trainers = [];
-        state.status = "idle";
-        state.error = null;
-      });
+      .addCase(logout, () => initialState);
   },
 });
 
 export const { clean } = trainersSlice.actions;
+
 export default trainersSlice.reducer;
+
 export const trainersSelector = (state) => state.trainers.trainers;

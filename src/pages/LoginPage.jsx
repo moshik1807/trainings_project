@@ -8,6 +8,7 @@ import { signInModes } from "../constantVariables";
 import Form from "../components/Form";
 import { userSelector } from "../features/user/userSlice";
 import { Button } from "../components/Button";
+import { locations } from "../constantVariables";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user) {
-      navigate("/trainers");
+      navigate(locations.trainersPage);
     }
   }, [user, navigate]);
 

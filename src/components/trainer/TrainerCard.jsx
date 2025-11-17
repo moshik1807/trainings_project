@@ -5,9 +5,7 @@ import { Card, CardContent, Typography, Avatar } from "@mui/material";
 export default function TrainerCard({ trainer }) {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate(`/trainer/${trainer.id}`);
-  };
+  const handleClick = () => navigate(`/trainer/${trainer.id}`);
 
   return (
     <Card

@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { login, signup } from "./userThunk";
+import { getUserById } from "./userThunk";
+import { apiStatus } from "../../constantVariables";
 
 const initialState = {
   user: null,
-  status: "idle",
+  status: apiStatus.start,
   error: null,
 };
 
@@ -12,41 +13,27 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    logout: (state) => {
-      state.user = null;
-      state.status = "idle";
-      state.error = null;
-    },
+    logout: () => initialState,
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state) => {
-        state.status = "loading";
+      .addCase(getUserById.pending, (state) => {
+        state.status = apiStatus.pending;
       })
-      .addCase(login.fulfilled, (state, action) => {
-        state.status = "succeeded";
+      .addCase(getUserById.fulfilled, (state, action) => {
+        state.status = apiStatus.fulfilled;
         state.user = action.payload;
       })
-      .addCase(login.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
-
-      .addCase(signup.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(signup.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.user = action.payload;
-      })
-      .addCase(signup.rejected, (state, action) => {
-        state.status = "failed";
+      .addCase(getUserById.rejected, (state, action) => {
+        state.status = apiStatus.rejected;
         state.error = action.error.message;
       });
   },
 });
 
 export const { logout } = userSlice.actions;
+
 export default userSlice.reducer;
+
 export const userSelector = (state) => state.user.user;
 export const userIdSelector = (state) => state.user.user?.id;
