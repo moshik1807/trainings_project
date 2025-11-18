@@ -4,10 +4,10 @@ import { useDispatch } from "react-redux";
 
 import { Button, TextField, Box, Alert } from "@mui/material";
 
-import { signInModes } from "../constantVariables";
+import { SIGN_IN_MODES } from "../constantVariables";
 import { getUserById } from "../features/user/userThunk";
 import { login, signup } from "../api";
-import { locations } from "../constantVariables";
+import { LOCATIONS } from "../constantVariables";
 
 export default function Form({ authMode }) {
   const dispatch = useDispatch();
@@ -20,20 +20,22 @@ export default function Form({ authMode }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
+
     let token;
     try {
-      if (authMode === signInModes.signUp) {
+      if (authMode === SIGN_IN_MODES.signUp) {
         token = await signup({ name, password });
-        console.log(token);
       } else {
         token = await login({ name, password });
-        console.log(token);
       }
       localStorage.setItem("token", token);
+
       dispatch(getUserById(token));
-      navigate(locations.trainersPage);
+
+      navigate(LOCATIONS.trainersPage);
     } catch (error) {
       console.error(error);
+      
       setError("Incorrect name or email.");
     }
   };

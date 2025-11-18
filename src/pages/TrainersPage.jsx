@@ -27,30 +27,31 @@ export default function TrainersPage() {
     }
   }, [dispatch, trainers, user]);
 
-  if (searchTrainersError) {
-    return (
-      <>
-        <Navbar />
-        <Container sx={{ mt: 4 }}>
-          <Typography variant="h3" sx={{ color: "white" }}>
-            No matching results found.
-          </Typography>
-        </Container>
-      </>
-    );
-  }
   return (
-    <Box>
-      <Navbar />
-      <Grid container spacing={4} justifyContent="center" sx={{ p: 2 }}>
-        {(searchTrainers.length > 0 ? searchTrainers : trainers).map(
-          (trainer, i) => (
-            <Grid size={4} key={i}>
-              <TrainerCard trainer={trainer} />
-            </Grid>
-          )
-        )}
-      </Grid>
-    </Box>
+    <>
+      {searchTrainersError ? (
+        <>
+          <Navbar />
+          <Container sx={{ mt: 4 }}>
+            <Typography variant="h3" sx={{ color: "white" }}>
+              No matching results found.
+            </Typography>
+          </Container>
+        </>
+      ) : (
+        <Box>
+          <Navbar />
+          <Grid container spacing={4} justifyContent="center" sx={{ p: 2 }}>
+            {(searchTrainers.length > 0 ? searchTrainers : trainers).map(
+              (trainer, i) => (
+                <Grid size={4} key={i}>
+                  <TrainerCard trainer={trainer} />
+                </Grid>
+              )
+            )}
+          </Grid>
+        </Box>
+      )}
+    </>
   );
 }

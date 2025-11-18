@@ -21,28 +21,29 @@ export default function TrainingsPage() {
     }
   }, [user, dispatch, trainings]);
 
-  if (!trainings.length) {
-    return (
-      <>
-        <Navbar />
-        <Container sx={{ mt: 4 }}>
-          <Typography variant="h3" sx={{ color: "white" }}>
-            No training sessions have been scheduled yet.
-          </Typography>
-        </Container>
-      </>
-    );
-  }
   return (
-    <Box>
-      <Navbar />
-      <Grid container spacing={4} justifyContent="center" sx={{ p: 2 }}>
-        {trainings.map((training, i) => (
-          <Grid size={3} key={i}>
-            <TrainingCard training={training} />
+    <>
+      {!trainings.length ? (
+        <>
+          <Navbar />
+          <Container sx={{ mt: 4 }}>
+            <Typography variant="h3" sx={{ color: "white" }}>
+              No training sessions have been scheduled yet.
+            </Typography>
+          </Container>
+        </>
+      ) : (
+        <Box>
+          <Navbar />
+          <Grid container spacing={4} justifyContent="center" sx={{ p: 2 }}>
+            {trainings.map((training, i) => (
+              <Grid size={3} key={i}>
+                <TrainingCard training={training} />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-    </Box>
+        </Box>
+      )}
+    </>
   );
 }

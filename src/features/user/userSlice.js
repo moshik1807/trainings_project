@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { getUserById } from "./userThunk";
-import { apiStatus } from "../../constantVariables";
+import { API_STATUS } from "../../constantVariables";
 
 const initialState = {
   user: null,
-  status: apiStatus.start,
+  status: API_STATUS.start,
   error: null,
 };
 
@@ -18,14 +18,14 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserById.pending, (state) => {
-        state.status = apiStatus.pending;
+        state.status = API_STATUS.pending;
       })
       .addCase(getUserById.fulfilled, (state, action) => {
-        state.status = apiStatus.fulfilled;
+        state.status = API_STATUS.fulfilled;
         state.user = action.payload;
       })
       .addCase(getUserById.rejected, (state, action) => {
-        state.status = apiStatus.rejected;
+        state.status = API_STATUS.rejected;
         state.error = action.error.message;
       });
   },

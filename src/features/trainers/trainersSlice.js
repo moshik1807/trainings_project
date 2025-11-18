@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { getAllTrainers } from "./trainersThunk";
 import { logout } from "../user/userSlice";
-import { apiStatus } from "../../constantVariables";
+import { API_STATUS } from "../../constantVariables";
 
 const initialState = {
   trainers: [],
-  status: apiStatus.start,
+  status: API_STATUS.start,
   error: null,
 };
 
@@ -14,23 +14,19 @@ const trainersSlice = createSlice({
   name: "trainers",
   initialState,
   reducers: {
-    clean: (state) => {
-      state.trainers = [];
-      state.status = apiStatus.start;
-      state.error = null;
-    },
+    clean: () => initialState,
   },
   extraReducers: (builder) => {
     builder
       .addCase(getAllTrainers.pending, (state) => {
-        state.status = apiStatus.pending;
+        state.status = API_STATUS.pending;
       })
       .addCase(getAllTrainers.fulfilled, (state, action) => {
-        state.status = apiStatus.fulfilled;
+        state.status = API_STATUS.fulfilled;
         state.trainers = action.payload;
       })
       .addCase(getAllTrainers.rejected, (state, action) => {
-        state.status = apiStatus.rejected;
+        state.status = API_STATUS.rejected;
         state.error = action.error.message;
       })
 

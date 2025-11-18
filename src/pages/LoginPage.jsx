@@ -4,11 +4,10 @@ import { useSelector } from "react-redux";
 
 import { Box } from "@mui/material";
 
-import { signInModes } from "../constantVariables";
+import { SIGN_IN_MODES, LOCATIONS } from "../constantVariables";
 import Form from "../components/Form";
 import { userSelector } from "../features/user/userSlice";
 import { Button } from "../components/Button";
-import { locations } from "../constantVariables";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -19,32 +18,34 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user) {
-      navigate(locations.trainersPage);
+      navigate(LOCATIONS.trainersPage);
     }
   }, [user, navigate]);
 
-  if (!authMode) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          flexDirection: "column",
-          gap: 2,
-        }}
-      >
-        <Button onClick={() => setAuthMode(signInModes.login)}>
-          {signInModes.login}
-        </Button>
+  return (
+    <>
+      {!authMode ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+            flexDirection: "column",
+            gap: 2,
+          }}
+        >
+          <Button onClick={() => setAuthMode(SIGN_IN_MODES.login)}>
+            {SIGN_IN_MODES.login}
+          </Button>
 
-        <Button onClick={() => setAuthMode(signInModes.signUp)}>
-          {signInModes.signUp}
-        </Button>
-      </Box>
-    );
-  }
-
-  return <Form authMode={authMode} />;
+          <Button onClick={() => setAuthMode(SIGN_IN_MODES.signUp)}>
+            {SIGN_IN_MODES.signUp}
+          </Button>
+        </Box>
+      ) : (
+        <Form authMode={authMode} />
+      )}
+    </>
+  );
 }
