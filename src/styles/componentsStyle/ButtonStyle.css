@@ -1,0 +1,18 @@
+.default-button {
+  padding: 10px 16px; 
+  color: blue;
+  background-color: rgba(179, 229, 252, 0.8);
+  border-radius: 15px;
+  margin-right: 1%;
+  font-weight: bold;
+  border: none;
+}
+
+.default-button:hover {
+  background-color: #123974ff;
+}
+
+.default-button:disabled {
+  background-color: rgb(212, 246, 249);
+  cursor: not-allowed;
+}

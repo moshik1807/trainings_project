@@ -1,20 +1,12 @@
-import { Button as MuiButton } from "@mui/material";
+import "../styles/componentsStyle/ButtonStyle.css";
 
-export function Button({ onClick, children }) {
-  return (
-    <MuiButton
-      sx={{
-        px: 2,
-        py: 1,
-        mr: 1,
-        backgroundColor: "rgba(179, 229, 252, 0.8)",
-        borderRadius: "20px",
-        fontWeight: "bold",
-        "&:hover": { backgroundColor: "#123974ff" },
-      }}
-      onClick={onClick}
-    >
-      {children}
-    </MuiButton>
-  );
-}
+export const Button = ({
+  onClick,
+  children,
+  disabled = false,
+  className = "default-button",
+}) => (
+  <button className={className} disabled={disabled} onClick={onClick}>
+    {children}
+  </button>
+);

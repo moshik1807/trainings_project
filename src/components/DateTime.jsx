@@ -1,43 +1,20 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 
-import {
-  Snackbar,
-  Box,
-  TextField,
-  Typography,
-  Alert,
-  Grid,
-} from "@mui/material";
+import { Typography, Grid } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+import dayjs from "dayjs";
 
 import { Button } from "./Button";
-import { createTraining } from "../features/trainings/trainingsThunk";
-import { traininssErrorSelector } from "../features/trainings/trainingsSlice";
-import { userIdSelector } from "../features/user/userSlice";
-import { CleanError } from "../features/trainings/trainingsSlice";
 
-export function DateTime({ trainerId }) {
-  const dispatch = useDispatch();
-
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [open, setOpen] = useState(false);
-
-  const error = useSelector(traininssErrorSelector);
-  const userId = useSelector(userIdSelector);
+export const DateTime = ({ createNewTraining }) => {
+  const [dateTime, setDateTime] = useState(dayjs());
 
   const handleSubmit = () => {
-    dispatch(
-      createTraining({
-        trainerId: trainerId,
-        traineeId: userId,
-        date: date,
-        time: time,
-      })
-    );
-    setOpen(true);
-    setDate("");
-    setTime("");
+    createNewTraining(dateTime);
+    setDateTime(dayjs());
   };
 
   return (
@@ -45,35 +22,14 @@ export function DateTime({ trainerId }) {
       <Typography variant="h6" sx={{ color: "rgba(2, 119, 189, 0.9)" }}>
         Schedule a Training
       </Typography>
-
-      <TextField
-        type="date"
-        value={date}
-        onChange={({ target: { value } }) => setDate(value)}
-        fullWidth
-      />
-
-      <TextField
-        type="time"
-        value={time}
-        onChange={({ target: { value } }) => setTime(value)}
-        fullWidth
-      />
-
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DateTimePicker
+          sx={{ width: 600 }}
+          value={dateTime}
+          onChange={setDateTime}
+        />
+      </LocalizationProvider>
       <Button onClick={handleSubmit}>Send</Button>
-
-      <Snackbar
-        open={open}
-        autoHideDuration={3000}
-        onClose={() => {
-          setOpen(false);
-          dispatch(CleanError());
-        }}
-      >
-        <Alert severity={error ? "error" : "success"}>
-          {error ? error : "Training added successfully!"}
-        </Alert>
-      </Snackbar>
     </Grid>
   );
-}
+};

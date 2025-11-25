@@ -1,18 +1,18 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { AppBar, Toolbar } from "@mui/material";
 
 import { Button } from "./Button";
-import SearchTrainer from "./SearchTrainer";
+import { SearchTrainer } from "./SearchTrainer";
 import { logout } from "../features/user/userSlice";
 import { LOCATIONS } from "../constantVariables";
 
-export default function Navbar() {
+import "../styles/componentsStyle/NavbarStyle.css";
+
+export const Navbar = ({ showSearch }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const location = useLocation();
 
   const handleExit = () => {
     dispatch(logout());
@@ -21,21 +21,17 @@ export default function Navbar() {
   };
 
   return (
-    <AppBar position="static" sx={{ borderRadius: "10px" }}>
-      <Toolbar
-        sx={{ bgcolor: "rgba(146, 178, 193, 0.8)", borderRadius: "10px" }}
-      >
+    <AppBar position="static" className="navbar-appbar">
+      <Toolbar className="navbar-toolbar">
         <Button onClick={() => navigate(LOCATIONS.trainersPage)}>
           trainers
         </Button>
-
         <Button onClick={() => navigate(LOCATIONS.trainingsPage)}>
           trainings
         </Button>
-
         <Button onClick={handleExit}>exit</Button>
-        {location.pathname === LOCATIONS.trainersPage && <SearchTrainer />}
+        {showSearch && <SearchTrainer />}
       </Toolbar>
     </AppBar>
   );
-}
+};

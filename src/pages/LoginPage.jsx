@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { Box } from "@mui/material";
-
 import { SIGN_IN_MODES, LOCATIONS } from "../constantVariables";
-import Form from "../components/Form";
+import { LoginForm } from "../components/LoginForm";
 import { userSelector } from "../features/user/userSlice";
 import { Button } from "../components/Button";
 
-export default function LoginPage() {
+import "../styles/pagesStyle/LoginPageStyle.css";
+
+export const LoginPage = () => {
   const navigate = useNavigate();
 
   const [authMode, setAuthMode] = useState("");
@@ -25,16 +25,7 @@ export default function LoginPage() {
   return (
     <>
       {!authMode ? (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-            flexDirection: "column",
-            gap: 2,
-          }}
-        >
+        <div className="login-container">
           <Button onClick={() => setAuthMode(SIGN_IN_MODES.login)}>
             {SIGN_IN_MODES.login}
           </Button>
@@ -42,10 +33,10 @@ export default function LoginPage() {
           <Button onClick={() => setAuthMode(SIGN_IN_MODES.signUp)}>
             {SIGN_IN_MODES.signUp}
           </Button>
-        </Box>
+        </div>
       ) : (
-        <Form authMode={authMode} />
+        <LoginForm authMode={authMode} />
       )}
     </>
   );
-}
+};

@@ -1,14 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
 
-import { Card, CardContent, Typography, Avatar } from "@mui/material";
+import { Typography } from "@mui/material";
 
+import { TrainingInformation } from "./trainingInformation";
 import { Button } from "../Button";
 import { deleteTraining } from "../../features/trainings/trainingsThunk";
 import { userSelector } from "../../features/user/userSlice";
 import { trainersSelector } from "../../features/trainers/trainersSlice";
-import { TrainingInformation } from "./trainingInformation";
 
-export function TrainingCard({ training }) {
+import "../../styles/componentsStyle/Card.css";
+
+export const TrainingCard = ({ training }) => {
   const dispatch = useDispatch();
 
   const trainers = useSelector(trainersSelector);
@@ -30,40 +32,16 @@ export function TrainingCard({ training }) {
   }
 
   return (
-    <Card
-      sx={{
-        m: 1,
-        p: 1,
-        bgcolor: "rgba(179, 229, 252, 0.8)",
-        borderRadius: "10px",
-        "&:hover": {
-          transform: "scale(1.05)",
-        },
-      }}
-    >
-      <Avatar
-        src={trainer.profileImage}
-        alt={trainer.name}
-        sx={{
-          width: 100,
-          height: 100,
-          margin: "10px auto",
-        }}
-      />
-      <CardContent
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 1.5,
-          textAlign: "center",
-          p: 2,
-        }}
-      >
+    <div className="card">
+      <div className="card-content">
+        <img
+          src={trainer.profileImage}
+          alt={trainer.name}
+          className="card-avatar"
+        />
         <TrainingInformation trainer={trainer} training={training} />
-
         <Button onClick={handleDelete}>🗑️</Button>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
-}
+};

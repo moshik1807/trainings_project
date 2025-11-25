@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+import { toast } from "react-toastify";
+
 export const getTrainingsById = createAsyncThunk(
   "trainings/getById",
   async (id, thunkAPI) => {
@@ -49,12 +51,15 @@ export const createTraining = createAsyncThunk(
         body: JSON.stringify(training),
       });
 
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message);
+      }
       const data = await res.json();
-
-      if (!res.ok) return thunkAPI.rejectWithValue(data.message);
-
+      toast.success("Training added successfully!")
       return data.data;
     } catch (err) {
+      toast.error(err.message);
       return thunkAPI.rejectWithValue(err.message);
     }
   }

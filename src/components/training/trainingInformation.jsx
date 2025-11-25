@@ -1,6 +1,11 @@
 import { Typography } from "@mui/material";
 
-export function TrainingInformation({ trainer, training }) {
+import dayjs from "dayjs";
+
+export const TrainingInformation = ({ trainer, training }) => {
+  const trainingDate = dayjs(training.dateTime).format("YYYY-MM-DD");
+  const trainingTime = dayjs(training.dateTime).format("HH:mm");
+
   return (
     <>
       <Typography variant="h6">
@@ -8,7 +13,7 @@ export function TrainingInformation({ trainer, training }) {
         {trainer.name}
       </Typography>
       <Typography variant="body2">
-        <strong>training time :</strong> {training.date} {training.time}
+        <strong>training time :</strong> {trainingDate} {trainingTime}
       </Typography>
       <Typography variant="body2">
         <strong>trainingType : </strong>
@@ -16,4 +21,4 @@ export function TrainingInformation({ trainer, training }) {
       </Typography>
     </>
   );
-}
+};

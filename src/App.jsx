@@ -1,20 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./App.css";
 
-import LoginPage from "./pages/LoginPage";
-import TrainersPage from "./pages/TrainersPage";
-import TrainerPage from "./pages/TrainerPage";
-import TrainingsPage from "./pages/TrainingsPage";
-import { LOCATIONS } from "./constantVariables";
 import { getUserById } from "./features/user/userThunk";
-
+import { APP_ROUTES } from "./appRoutes";
 
 export default function App() {
   const dispatch = useDispatch();
-  
+
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -26,11 +25,11 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path={LOCATIONS.loginPage} element={<LoginPage />} />
-        <Route path={LOCATIONS.trainersPage} element={<TrainersPage />} />
-        <Route path={LOCATIONS.trainerPage} element={<TrainerPage />} />
-        <Route path={LOCATIONS.trainingsPage} element={<TrainingsPage />} />
+        {APP_ROUTES.map(({ path, Component }) => (
+          <Route key={path} path={path} element={<Component />} />
+        ))}
       </Routes>
+      <ToastContainer />
     </Router>
   );
 }

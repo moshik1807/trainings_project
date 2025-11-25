@@ -1,21 +1,38 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { Box, Typography, Paper, Stack, Divider } from "@mui/material";
+import { Typography, Stack, Divider } from "@mui/material";
 
+import { createTraining } from "../features/trainings/trainingsThunk";
+import { userIdSelector } from "../features/user/userSlice";
 import { DateTime } from "../components/DateTime";
 import { trainersSelector } from "../features/trainers/trainersSlice";
-import Navbar from "../components/Navbar";
+import { Navbar } from "../components/Navbar";
 import { TrainerInformation } from "../components/trainer/TrainerInformation";
-import { TrainerPrifile } from "../components/trainer/TrainerProfile";
+import { TrainerProfile } from "../components/trainer/TrainerProfile";
 
-export default function TrainerPage() {
+import "../styles/pagesStyle/TrainerPage.css";
+
+export const TrainerPage = () => {
   const { id } = useParams();
+
+  const dispatch = useDispatch();
 
   const [trainer, setTrainer] = useState(null);
 
   const trainers = useSelector(trainersSelector);
+  const userId = useSelector(userIdSelector);
+
+  const createNewTraining = (dateTime) => {
+    dispatch(
+      createTraining({
+        trainerId: id,
+        traineeId: userId,
+        dateTime: dateTime,
+      })
+    );
+  };
 
   useEffect(() => {
     if (trainers && id) {
@@ -31,41 +48,20 @@ export default function TrainerPage() {
         <Typography>Trainer not found</Typography>
       ) : (
         <>
-          <Navbar />
-          <Box
-            sx={{
-              backgroundColor: "rgba(179, 229, 252, 0.8)",
-              p: 5,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Paper
-              elevation={6}
-              sx={{
-                p: 4,
-                maxWidth: 700,
-                width: "100%",
-                borderRadius: 3,
-                backgroundColor: "rgba(179, 229, 252, 0.8)",
-              }}
-            >
+          <Navbar showSearch={false} />
+          <div className="trainer-page-container">
+            <div className="trainer-details-card">
               <Stack spacing={3} alignItems="center">
-                <TrainerPrifile trainer={trainer} />
-
+                <TrainerProfile trainer={trainer} />
                 <Divider sx={{ width: "100%" }} />
-
                 <TrainerInformation trainer={trainer} />
-
                 <Divider sx={{ width: "100%" }} />
-
-                <DateTime trainerId={id} />
+                <DateTime createNewTraining={createNewTraining} />
               </Stack>
-            </Paper>
-          </Box>
+            </div>
+          </div>
         </>
       )}
     </>
   );
-}
+};

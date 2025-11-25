@@ -1,20 +1,18 @@
-import { Typography, Avatar } from "@mui/material";
+import { Typography } from "@mui/material";
 
-export function TrainerPrifile({ trainer }) {
+import "../../styles/componentsStyle/trainer/TrainerProfileStyle.css";
+
+export const TrainerProfile = ({ trainer }) => {
   return (
     <>
-      <Avatar
+      <img
         src={trainer.profileImage}
         alt={trainer.name}
-        sx={{
-          width: 250,
-          height: 250,
-          margin: "10px auto",
-        }}
+        className="trainer-profile-avatar"
       />
-      <Typography variant="h4" sx={{ color: "rgba(37, 37, 216, 0.6)", my: 1 }}>
+      <Typography variant="h4" className="trainer-profile-name">
         Name: {trainer.name}
       </Typography>
     </>
   );
-}
+};

@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Box, Grid, Container, Typography } from "@mui/material";
 
-import Navbar from "../components/Navbar";
-import TrainerCard from "../components/trainer/TrainerCard";
+import { Navbar } from "../components/Navbar";
+import { TrainerCard } from "../components/trainer/TrainerCard";
 import { getAllTrainers } from "../features/trainers/trainersThunk";
 import { trainersSelector } from "../features/trainers/trainersSlice";
 import {
@@ -13,7 +13,7 @@ import {
 } from "../features/SearchTrainers/SearchTrainersSlice";
 import { userIdSelector } from "../features/user/userSlice";
 
-export default function TrainersPage() {
+export const TrainersPage = () => {
   const dispatch = useDispatch();
 
   const trainers = useSelector(trainersSelector);
@@ -40,7 +40,7 @@ export default function TrainersPage() {
         </>
       ) : (
         <Box>
-          <Navbar />
+          <Navbar showSearch={true} />
           <Grid container spacing={4} justifyContent="center" sx={{ p: 2 }}>
             {(searchTrainers.length > 0 ? searchTrainers : trainers).map(
               (trainer, i) => (
@@ -54,4 +54,4 @@ export default function TrainersPage() {
       )}
     </>
   );
-}
+};

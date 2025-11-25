@@ -1,32 +1,26 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { Box, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 
 import { Button } from "./Button";
 import { getTrainersBySearch } from "../features/SearchTrainers/SearchTrainersThunk";
 import { cleanSearch } from "../features/SearchTrainers/SearchTrainersSlice";
 
-export default function SearchTrainer() {
+import "../styles/componentsStyle/SearchTrainerStyle.css";
+
+export const SearchTrainer = () => {
   const dispatch = useDispatch();
 
   const [city, setCity] = useState("");
   const [trainingType, setTrainingType] = useState("");
 
   const handleSearch = () => {
-    if (city && trainingType) {
-      dispatch(getTrainersBySearch({ city, trainingType }));
-    }
+    dispatch(getTrainersBySearch({ city, trainingType }));
   };
 
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      marginLeft="auto"
-      borderRadius={"10px"}
-      gap={1}
-    >
+    <div className="trainer-search-container">
       <TextField
         sx={{ bgcolor: "rgba(179, 229, 252, 0.8)" }}
         label="city"
@@ -43,8 +37,9 @@ export default function SearchTrainer() {
         required
         size="small"
       />
-      <Button onClick={handleSearch}>🔍</Button>
-
+      <Button onClick={handleSearch} disabled={!city || !trainingType}>
+        🔍
+      </Button>
       <Button
         onClick={() => {
           dispatch(cleanSearch());
@@ -54,6 +49,6 @@ export default function SearchTrainer() {
       >
         clear search
       </Button>
-    </Box>
+    </div>
   );
-}
+};
