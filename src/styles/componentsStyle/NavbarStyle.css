@@ -1,0 +1,9 @@
+.navbar-appbar {
+  border-radius: 10px;
+}
+
+.navbar-toolbar {
+  background-color: rgba(146, 178, 193, 0.8);
+  display: flex;
+  gap: 10px; 
+}

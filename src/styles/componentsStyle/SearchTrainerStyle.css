@@ -1,0 +1,7 @@
+.trainer-search-container{
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    border-radius: 10px;
+    gap: 8px;
+}

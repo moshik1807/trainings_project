@@ -1,0 +1,11 @@
+.login-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; 
+  width: 300px;
+  margin: 50px auto;
+  margin-block: 300px;
+  padding: 20px;
+  background-color: rgba(179, 229, 252, 0.8);
+  border-radius: 10px;
+}

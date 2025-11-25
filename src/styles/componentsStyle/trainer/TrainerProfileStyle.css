@@ -1,0 +1,10 @@
+.trainer-profile-avatar{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+}
+.trainer-profile-name{
+    color: rgba(37, 37, 216, 0.6);
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
