@@ -31,7 +31,7 @@ export const TrainersPage = () => {
     <>
       {searchTrainersError ? (
         <>
-          <Navbar />
+          <Navbar showSearch={true}/>
           <Container sx={{ mt: 4 }}>
             <Typography variant="h3" sx={{ color: "white" }}>
               No matching results found.
